@@ -1,0 +1,36 @@
+<h1>Register New User</h1>
+<form (ngSubmit)="registerUser()" [formGroup]="form">
+    <!-- UserName Input -->
+    <div class="form-group">
+        <label for="username"> Enter UserName </label>
+        <input type="text" formControlName="username" [ngClass]="{'is-invalid':submitted && f.username.errors}" class="form-control">
+        <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
+            <div *ngIf="f.username.errors.required">
+                username Is Required!
+            </div>
+        </div>
+    </div>
+    <!-- Email Input -->
+    <div class="form-group">
+        <label for="email"> Enter Email </label>
+        <input type="email" formControlName="email"  [ngClass]="{'is-invalid':submitted && f.email.errors}" class="form-control">
+        <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+            <div *ngIf="f.email.errors.required">
+                Email Is Required!
+            </div>
+        </div>
+    </div>
+    <!-- Password Input -->
+    <div class="form-group">
+        <label for="password"> Enter Password </label>
+        <input type="password" formControlName="password"  [ngClass]="{'is-invalid':submitted && f.password.errors}" class="form-control">
+        <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+            <div *ngIf="f.password.errors.required">
+                Password Is Required!
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <button class="btn btn-success btn-lg mt-3">Register</button>
+    </div>
+</form>    

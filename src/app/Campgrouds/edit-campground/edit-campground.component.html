@@ -1,0 +1,61 @@
+<h1 style="color: hsl(240, 100%, 27%);" *ngIf="campground"> Edit Campground >>>> {{campground.title}}
+</h1>
+<form (ngSubmit)="uddateData()" [formGroup]="form">
+    <!-- Title Input -->
+    <div class="form-group" >
+        <label for="title"> Enter Title </label>
+        <input type="text" formControlName="title" placeholder="Enter Title" [ngClass]="{'is-invalid':submitted && f.title.errors}" class="form-control">
+        <div *ngIf="submitted && f.title.errors" class="invalid-feedback">
+            <div *ngIf="f.title.errors.required">
+                Title Is Required!
+            </div>
+        </div>
+    </div>
+    <!-- Image Input -->
+    <div class="form-group">
+        <label for="image"> Selcet Image </label>
+        <input 
+         type="file" 
+         name="images"
+         id="image" 
+         (change)="uploadFile($event)" 
+         class="form-control" 
+         accept="image/x-png,image/gif,image/jpeg"/>
+    </div>
+    <!-- Location Input -->
+    <div class="form-group">
+        <label for="location"> Enter Location </label>
+        <input type="text" formControlName="location" placeholder="Enter Location" [ngClass]="{'is-invalid':submitted && f.location.errors}" class="form-control">
+        <div *ngIf="submitted && f.location.errors" class="invalid-feedback">
+            <div *ngIf="f.location.errors.required">
+                Location Is Required!
+            </div>
+        </div>
+    </div>
+    <!-- Price Input -->
+    <label id="pricelbl" for="price">Enter Price</label>
+    <div class="input-group mb-3">
+        <span class="input-group-text">$</span>
+        <input type="text" formControlName="price" placeholder="Enter Price" [ngClass]="{'is-invalid':submitted && f.price.errors}" class="form-control">
+        <span class="input-group-text">.00</span>
+        <div *ngIf="submitted && f.price.errors" class="invalid-feedback">
+
+            <div *ngIf="f.price.errors.required">
+                Price Is Required!
+            </div>
+        </div>
+    </div>
+    <!-- Description Input -->
+    <label id="pricelbl" for="description">Enter Description</label>
+    <div class="input-group">
+        <textarea formControlName="description" placeholder="Enter Description" [ngClass]="{'is-invalid':submitted && f.description.errors}" class="form-control"></textarea>
+        <div *ngIf="submitted && f.description.errors" class="invalid-feedback">
+            <div *ngIf="f.description.errors.required">
+                Description Is Required!
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <button class="btn btn-success btn-lg mt-3">Add</button>
+    </div>
+</form>

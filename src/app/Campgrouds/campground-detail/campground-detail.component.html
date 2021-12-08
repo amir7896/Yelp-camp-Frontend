@@ -1,0 +1,67 @@
+<div class="row">
+    <div class="col-6">
+        <div class="card mt-4" style="width: 40rem;" *ngIf="camps">
+            <img src="{{camps.images[0].url}}" class="card-img-top" alt="">
+            <div class="card-body">
+                <h5 class="card-title">{{camps.title}}</h5>
+                <p class="card-text">{{camps.description}}</p>
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item"> <b>Location : </b> {{camps.location}} </li>
+                <div *ngIf="camp">
+                    <li class="list-group-item"> <b>Submitted By : </b> {{camp.author.username}} </li>
+                </div>
+                <li class="list-group-item"><b>Price : </b>${{camps.price}} /night</li>
+            </ul>
+            <div class="card-body" *ngIf=" camp && loginuser">
+                <button  *ngIf="loginuser.User._id === camp.author._id" class="btn btn-info" routerLink='edit'>Edit</button>
+                <button  *ngIf="loginuser.User._id === camp.author._id" class="btn btn-danger" (click)="deleteData(camp._id)">Delete</button>
+            </div>
+        </div>
+    </div>
+    <div id="reviewdiv" class="col-6 mt-3 ml-4">
+        <h1>Leave A Review</h1>
+        <form (ngSubmit)="insertReview(camps._id)" [formGroup]="form">
+            <div class="mb-3">
+                <label class="form-label" for="rating">Rating</label>
+                <input formControlName="rating" class="form-range" type="range" min="1" max="5" [ngClass]="{'is-invalid':submitted && f.rating.errors}">
+                <div *ngIf="submitted && f.rating.errors" class="invalid-feedback">
+                    <div *ngIf="f.rating.errors.required">
+                        Rating Is Required!
+                    </div>
+                </div>
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="comment">Review</label>
+                <textarea class="form-control" cols="30" rows="4" formControlName="comment" [ngClass]="{'is-invalid':submitted && f.comment.errors}"></textarea>
+                <div *ngIf="submitted && f.comment.errors" class="invalid-feedback">
+                    <div *ngIf="f.comment.errors.required">
+                        Description Is Required!
+                    </div>
+                </div>
+            </div>
+            <button class="btn btn-success">Add Review</button>
+        </form>
+
+        <!-- Card For Review -->
+        <div *ngIf="camp">
+            <div class="card mt-4" *ngFor="let data of camp.reviews">
+                <div class="card-body">
+                    <h5 class="card-title"> <i>Rating :</i> {{data.rating}}</h5>
+                    <!-- <p class="starability-result" data-rating="{{data.rating}}">
+                      Rated: 4 stars
+                    </p> -->
+                    <h6 class="card-subtitle mb-2 text-muted">Review By : {{data.author.username}}</h6>
+                    <p class="card-text">
+                        <b>Description :</b> {{data.comment}}
+                    </p>
+                    <div *ngIf="loginuser">
+                        <div *ngIf="loginuser.User._id === data.author._id ">
+                            <button class="btn btn-danger" (click)="deleteReview(camp._id, data._id)" >Delete</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
