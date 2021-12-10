@@ -1,6 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
+// Map Box
+import * as mapboxgl from 'mapbox-gl';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +18,9 @@ export class CampgroundsService {
     return headers;
   }
 
-  constructor(private httpclient : HttpClient) { }
+  constructor(private httpclient : HttpClient) { 
+   
+  }
 
   getAllCamp(){
     return this.httpclient.get('http://localhost:3000/campgrounds')
@@ -70,5 +75,32 @@ export class CampgroundsService {
   deleteReview(id:any, reviewId:any){
     return this.httpclient.delete('http://localhost:3000/campgrounds/'+id+'/reviews/'+reviewId )
   }
+
+  // ===================
+  // Map Box 
+  // ===================
+  // map!: mapboxgl.Map;
+  // style = 'mapbox://styles/mapbox/streets-v11';
+  // lat = 45.899977;
+  // lng = 6.172652;
+  // zoom = 12
+  // buildMap() {
+  //   this.map = new mapboxgl.Map({
+  //     accessToken:environment.mapbox.accessToken,
+  //     container: 'map', // container ID
+  //     style: 'mapbox://styles/mapbox/streets-v11', // style URL
+  //     center: [73.074144, 33.719361], // starting position [lng, lat]
+  //     zoom: 9 // starting zoom
+  //     // container: 'map',
+  //     // style: this.style,
+  //     // zoom: this.zoom,
+  //     // center: [this.lng, this.lat]
+  //   })
+  //  this.map.addControl(new mapboxgl.NavigationControl());
+  //  new mapboxgl.Marker()
+  //  .setLngLat([73.074144, 33.719361])
+  //  .addTo(this.map)
+
+  // }
 
 }

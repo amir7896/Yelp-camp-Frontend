@@ -16,11 +16,17 @@
         <label for="image"> Selcet Image </label>
         <input 
          type="file" 
-         name="images"
+         [ngClass]="{'is-invalid':submitted && f.images.errors}"
          id="image" 
+         name="images"
          (change)="uploadFile($event)" 
          class="form-control" 
          accept="image/x-png,image/gif,image/jpeg"/>
+         <div *ngIf="submitted && f.images.errors" class="invalid-feedback">
+            <div *ngIf="f.images.errors.required">
+                Image Is Required!
+            </div>
+        </div>
     </div>
     <!-- Location Input -->
     <div class="form-group">

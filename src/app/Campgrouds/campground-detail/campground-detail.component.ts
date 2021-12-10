@@ -7,12 +7,18 @@ import { FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Reviews } from 'src/app/models/reviews.model';
 import { AuthServicesService } from 'src/app/services/Authserice/auth-services.service';
+// Map Box
+import * as mapboxgl from 'mapbox-gl';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-campground-detail',
   templateUrl: './campground-detail.component.html',
   styleUrls: ['./campground-detail.component.css']
 })
+
+
+
 export class CampgroundDetailComponent implements OnInit {
   // =========================
   // Form For Inserting Review
@@ -24,6 +30,15 @@ export class CampgroundDetailComponent implements OnInit {
   camp:any;
   submitted=false;
   loginuser:any;
+  // For Map
+  map!: mapboxgl.Map;
+  // Map Center Variables
+  longi!: number;
+  lati! : number
+
+
+
+
 
 
   reviews: Reviews = {
@@ -32,15 +47,7 @@ export class CampgroundDetailComponent implements OnInit {
     comment: ''
   }
   camps:any;
-  // camps : Campgrounds ={
-  //   _id: '',
-  //   title: '',
-  //   description: '',
-  //   image: '',
-  //   location: '',
-  //   price: '',
-  //   Reviews:''
-  // }
+
 
   constructor( private campgroundService: CampgroundsService,
     private route: ActivatedRoute,
@@ -63,16 +70,37 @@ export class CampgroundDetailComponent implements OnInit {
     this.getCampGround(this.route.snapshot.params.id);
     this.getLoginUser();
     this.createForm();
-    
+    // Mapbox
+    //this.buildMap(); 
   }
   get f(){
     return this.form.controls;
   }
+  // lat = 31.497754
+  // lng = 74.360106
+  
   getCampGround(id: any) {
-    this.campgroundService.getDataById(id).subscribe(res => {
+    this.campgroundService.getDataById(id).subscribe(res  => {
       this.camp = res;
       this.camps =res;
+      this.longi = this.camp.geometry.coordinates[0];
+      this.lati  = this.camp.geometry.coordinates[1];
+      console.log('Longitutde is  =', this.longi);
+      console.log('Latitude = ', this.lati)
       console.log('Sigle Camp Getting BY ID',this.camp);
+      // Map Of Camp ....
+      
+      this.map = new mapboxgl.Map({
+      accessToken:environment.mapbox.accessToken,
+      container: 'map', // container ID
+      style: 'mapbox://styles/mapbox/streets-v11', // style URL
+      center: [this.longi, this.lati] ,  // starting position [lng, lat]
+      zoom: 9 //
+      })
+      this.map.addControl(new mapboxgl.NavigationControl());
+      new mapboxgl.Marker()
+      .setLngLat([this.longi, this.lati])
+      .addTo(this.map)
     });
   }
   getCampGroundReviews(campgroundObj: any) {
@@ -124,4 +152,29 @@ export class CampgroundDetailComponent implements OnInit {
       // console.log(this.loginuser);
     })
   }
+
+  // =======================
+  // Creating  MAP of Camp
+  // =======================
+
+  // buildMap() {
+  //   this.map = new mapboxgl.Map({
+  //     accessToken:environment.mapbox.accessToken,
+  //     container: 'map', // container ID
+  //     style: 'mapbox://styles/mapbox/streets-v11', // style URL
+  //     center: [this.lng, this.lat] ,  // starting position [lng, lat]
+  //     zoom: 9 // starting zoom
+  //     // container: 'map',
+  //     // style: this.style,
+  //     // zoom: this.zoom,
+  //     // center: [this.lng, this.lat]
+  //   })
+    
+  //  this.map.addControl(new mapboxgl.NavigationControl());
+  //  new mapboxgl.Marker()
+  //  .setLngLat([this.lng, this.lat])
+  //  .addTo(this.map)
+
+  // }
+
 }

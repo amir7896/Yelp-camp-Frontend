@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CampgroundsService } from 'src/app/services/campgrounds.service';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { Campgrounds } from 'src/app/models/campgrounds.model';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -18,26 +18,37 @@ export class EditCampgroundComponent implements OnInit {
   id:any;
   data:any;
   submitted = false;
-  fileHolder!: File | null ;
+  form!: FormGroup
 files:any
   constructor(private campgroundService: CampgroundsService,
     private route: ActivatedRoute,
     private taostr: ToastrService,
-    private router: Router) { this.fileHolder = null;}
+    private router: Router,
+    private formBuilder : FormBuilder,)
+     { }
 
-    form  = new FormGroup({
-      title:new FormControl('', Validators.required),
-      images: new FormControl(null, Validators.required),
-      location: new FormControl('', Validators.required),
-      price: new FormControl('', Validators.required),
-      description: new FormControl('', Validators.required) 
-      })
+    creatForm(){
+      this.form = this.formBuilder.group({
+        title: ['', Validators.required],
+        images: [null, Validators.required],
+        location: ['', Validators.required],
+        price: ['', Validators.required],
+        description: ['', Validators.required]
+      });
+    }
 
       
      // ====================
   // File Upload Event 
   // ====================
   public uploadFile(event: Event): void {
+    // Other Method to Get Image 
+    // const target = event.target as HTMLInputElement;
+    //   const files = target.files as FileList;
+    //   console.log(files);
+    // ==========================
+    // Old Method That Is Using
+    // ==========================
     const input = event.target as HTMLInputElement;
     if (!input.files?.length) {
         return;
@@ -53,21 +64,23 @@ files:any
   ngOnInit(): void {
     this.id = this.route.snapshot.params.id;
     this.getData();
+    this.creatForm();
   }
   get f(){
     return this.form.controls;
   }
+
   getData(){
     this.campgroundService.getDataById(this.id).subscribe(res => {
       this.data = res; 
       this.campground = this.data;
       this.form.patchValue({
-        title: this.campground.title,
-        images: this.campground.images[0].url,
-        location: this.campground.location,
-        price: this.campground.price,
-        description: this.campground.description,
-     });
+             title: this.campground.title,
+             images: this.campground.images[0].url,
+             location: this.campground.location,
+             price: this.campground.price,
+             description: this.campground.description,
+          });
       console.log('Fetching Form Values',this.form.value);
       console.log('file data = ', this.campground.images[0].url);
     });
