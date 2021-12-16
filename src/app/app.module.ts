@@ -32,6 +32,8 @@ import { TokenInterceptorService } from './services/TokenService/token-intercept
 import { FlashMessagesModule } from  'flash-messages-angular'
 //Image Upload
 import { FileUploadModule } from 'ng2-file-upload';
+import { ForgotPasswordComponent } from './resetPassword/forgot-password/forgot-password.component';
+import { ResetPasswordComponent } from './resetPassword/reset-password/reset-password.component';
 
 
 @NgModule({
@@ -44,6 +46,8 @@ import { FileUploadModule } from 'ng2-file-upload';
     NavbarComponent,
     LoginComponent,
     RegisterComponent,
+    ForgotPasswordComponent,
+    ResetPasswordComponent,
 
   ],
   imports: [

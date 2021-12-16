@@ -7,6 +7,8 @@ import { CampgroundDetailComponent } from './Campgrouds/campground-detail/campgr
 import { CampgroundsComponent } from './Campgrouds/campgrounds/campgrounds.component';
 import { EditCampgroundComponent } from './Campgrouds/edit-campground/edit-campground.component';
 import { AuthGuard } from './guard/auth.guard';
+import { ForgotPasswordComponent } from './resetPassword/forgot-password/forgot-password.component';
+import { ResetPasswordComponent } from './resetPassword/reset-password/reset-password.component';
 
 const routes: Routes = [
   {
@@ -28,6 +30,12 @@ const routes: Routes = [
   },
   { 
     path: 'register', component: RegisterComponent
+  },
+  {
+    path: 'forgot-password', component: ForgotPasswordComponent
+  },
+  {
+    path: 'reset/:token', component: ResetPasswordComponent
   }
 ];
 

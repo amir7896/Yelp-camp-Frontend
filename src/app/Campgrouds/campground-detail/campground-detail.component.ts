@@ -25,6 +25,7 @@ export class CampgroundDetailComponent implements OnInit {
   // =========================
   form! : FormGroup;
 
+  currentRate = 8;
   data:any;
   delreview:any;
   camp:any;
@@ -85,8 +86,8 @@ export class CampgroundDetailComponent implements OnInit {
       this.camps =res;
       this.longi = this.camp.geometry.coordinates[0];
       this.lati  = this.camp.geometry.coordinates[1];
-      console.log('Longitutde is  =', this.longi);
-      console.log('Latitude = ', this.lati)
+      // console.log('Longitutde is  =', this.longi);
+      // console.log('Latitude = ', this.lati)
       console.log('Sigle Camp Getting BY ID',this.camp);
       // Map Of Camp ....
       
@@ -100,6 +101,12 @@ export class CampgroundDetailComponent implements OnInit {
       this.map.addControl(new mapboxgl.NavigationControl());
       new mapboxgl.Marker()
       .setLngLat([this.longi, this.lati])
+      .setPopup(
+        new mapboxgl.Popup({offset:15})
+        .setHTML(
+          `<h3> ${this.camp.title} </h3> <p> ${this.camp.location}</p>`
+        )
+      )
       .addTo(this.map)
     });
   }

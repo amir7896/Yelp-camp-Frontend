@@ -19,7 +19,9 @@ export class EditCampgroundComponent implements OnInit {
   data:any;
   submitted = false;
   form!: FormGroup
-files:any
+  files:any;
+  images:any
+  
   constructor(private campgroundService: CampgroundsService,
     private route: ActivatedRoute,
     private taostr: ToastrService,
@@ -30,7 +32,7 @@ files:any
     creatForm(){
       this.form = this.formBuilder.group({
         title: ['', Validators.required],
-        images: [null, Validators.required],
+        images: ['', Validators.required],
         location: ['', Validators.required],
         price: ['', Validators.required],
         description: ['', Validators.required]
@@ -76,7 +78,6 @@ files:any
       this.campground = this.data;
       this.form.patchValue({
              title: this.campground.title,
-             images: this.campground.images[0].url,
              location: this.campground.location,
              price: this.campground.price,
              description: this.campground.description,
@@ -111,14 +112,6 @@ files:any
           })
         }
       })
-    // this.campgroundService.updateData(this.id, this.form.value).subscribe(res => {
-    //   this.data = res;
-    //   this.taostr.success(JSON.stringify(this.data.code),JSON.stringify(this.data.message), {
-    //     timeOut:2000,
-    //     progressBar:true
-    //   });
-    //   this.router.navigateByUrl('/campground/'+this.id);
-    // })
   }
 
 }
