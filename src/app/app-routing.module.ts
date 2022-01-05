@@ -13,7 +13,7 @@ import { ResetPasswordComponent } from './resetPassword/reset-password/reset-pas
 
 const routes: Routes = [
   {
-    path: '' , component:HomeComponent
+    path: '/' , component:HomeComponent
   },
   {
     path: 'campgrounds', component: CampgroundsComponent

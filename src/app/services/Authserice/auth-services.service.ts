@@ -10,14 +10,14 @@ export class AuthServicesService {
     private router: Router) { }
 
   registerNewUser(data:any){
-    return this.httpClient.post<any>('http://localhost:3000/register', data)
+    return this.httpClient.post<any>('register', data)
   }
   loginUser(data:any){
-    return this.httpClient.post<any>('http://localhost:3000/login', data)
+    return this.httpClient.post<any>('login', data)
   }
   // Get All Users
   getAllUsers(){
-      return this.httpClient.get('http://localhost:3000/profile')
+      return this.httpClient.get('profile')
   }
   loggedIn(){
     return !!localStorage.getItem('token');
@@ -35,19 +35,19 @@ export class AuthServicesService {
   // Password Forgot  Handiling to send mail
   // =========================================
   forgetPassword(data:any){
-    return this.httpClient.post('http://localhost:3000/resetPass/forget',data)
+    return this.httpClient.post('resetPass/forget',data)
   }
   // =============================
   // get token for password reset
   // =============================
   gettokenForReset(token: any){
-    return this.httpClient.get('http://localhost:3000/resetPass/reset'+token)
+    return this.httpClient.get('resetPass/reset'+token)
   }
   // ================
   // Change Password
   // ================
   changeUserPassword(token: any,data:any){
-    return this.httpClient.post('http://localhost:3000/resetPass/reset/:'+token ,data);
+    return this.httpClient.post('resetPass/reset/:'+token ,data);
   }
 
 
