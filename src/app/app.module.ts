@@ -34,6 +34,7 @@ import { FlashMessagesModule } from  'flash-messages-angular'
 import { FileUploadModule } from 'ng2-file-upload';
 import { ForgotPasswordComponent } from './resetPassword/forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './resetPassword/reset-password/reset-password.component';
+import { HomeComponent } from './Campgrouds/home/home.component';
 
 
 @NgModule({
@@ -48,6 +49,7 @@ import { ResetPasswordComponent } from './resetPassword/reset-password/reset-pas
     RegisterComponent,
     ForgotPasswordComponent,
     ResetPasswordComponent,
+    HomeComponent,
 
   ],
   imports: [

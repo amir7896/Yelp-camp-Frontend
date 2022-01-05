@@ -43,18 +43,18 @@ export class ForgotPasswordComponent implements OnInit {
     }
     this.authService.forgetPassword(this.form.value).subscribe(res => {
       this.data = res;
-      if(this.data){
+      if(this.data.success){
         this.toastr.success(JSON.stringify(this.data.code), JSON.stringify(this.data.message), {
           timeOut:2000,
           progressBar:true
         });
         this.router.navigate(['/login']);
-      }else if(!this.data){
+      }else{
         this.toastr.error(JSON.stringify(this.data.code), JSON.stringify(this.data.message),{
           progressBar: true,
           timeOut: 3000
-        
         })
+        this.router.navigate(['/forgot-password']);
       }
     }, (err => {
       this.toastr.error(JSON.stringify('500'), JSON.stringify('Email Not Exists'),{

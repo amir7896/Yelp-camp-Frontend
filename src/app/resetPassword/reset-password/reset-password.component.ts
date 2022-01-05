@@ -50,7 +50,7 @@ export class ResetPasswordComponent implements OnInit {
     }
     this.authService.changeUserPassword(this.gettingtoken, this.form.value).subscribe(res => {
       this.data = res;
-      if(this.data){
+      if(this.data.success){
         this.toastr.success(JSON.stringify(this.data.code), JSON.stringify(this.data.message), {
           progressBar: true,
           timeOut:3000,
@@ -60,9 +60,7 @@ export class ResetPasswordComponent implements OnInit {
         this.toastr.error(JSON.stringify(this.data.code), JSON.stringify(this.data.message), {
           timeOut: 3000,
           progressBar: true,
-          positionClass:'bottom-left',
           closeButton: true,
-          
         })
         
         this.router.navigate(['/reset/'+this.gettingtoken]);

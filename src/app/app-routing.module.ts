@@ -6,13 +6,17 @@ import { AddCampgroundComponent } from './Campgrouds/add-campground/add-campgrou
 import { CampgroundDetailComponent } from './Campgrouds/campground-detail/campground-detail.component';
 import { CampgroundsComponent } from './Campgrouds/campgrounds/campgrounds.component';
 import { EditCampgroundComponent } from './Campgrouds/edit-campground/edit-campground.component';
+import { HomeComponent } from './Campgrouds/home/home.component';
 import { AuthGuard } from './guard/auth.guard';
 import { ForgotPasswordComponent } from './resetPassword/forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './resetPassword/reset-password/reset-password.component';
 
 const routes: Routes = [
   {
-    path: '' , component:CampgroundsComponent
+    path: '' , component:HomeComponent
+  },
+  {
+    path: 'campgrounds', component: CampgroundsComponent
   },
   {
     path: 'add-campground' , component: AddCampgroundComponent,
